@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LeadCall — Ara, kaydet, kimin döneceğini gör</title>
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="top-in">
+      <a class="brand" href="/" aria-label="LeadCall ana sayfa">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor"/><path d="M9 20.5c0-6 3.2-9.5 7-9.5s7 3.5 7 9.5" fill="none" stroke="var(--paper)" stroke-width="2.6" stroke-linecap="round"/><circle cx="16" cy="21" r="2.4" fill="var(--paper)"/></svg>
+        <span>LeadCall</span>
+      </a>
+      <div class="top-actions">
+        <button type="button" id="setupPill" class="setup-pill" hidden></button>
+        <button type="button" id="settingsBtn" class="btn quiet">Ayarlar</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="finder" aria-labelledby="finderTitle">
+    <div class="finder-in">
+      <h1 id="finderTitle">Bugün kimi arıyorsun?</h1>
+      <form id="searchForm" class="search" autocomplete="off">
+        <div class="field-inline">
+          <label for="city">Şehir</label>
+          <input id="city" list="cities" placeholder="Örn. Denizli" required />
+        </div>
+        <div class="field-inline grow">
+          <label for="category">Aradığın iş kolu</label>
+          <input id="category" list="categories" placeholder="Örn. site yönetim şirketi" required />
+        </div>
+        <button type="submit" id="searchBtn" class="btn primary big">İşletmeleri bul</button>
+      </form>
+      <div class="quick" id="quick" aria-label="Önerilen iş kolları"></div>
+      <datalist id="cities">
+        <option>İstanbul</option><option>Ankara</option><option>İzmir</option><option>Bursa</option>
+        <option>Antalya</option><option>Denizli</option><option>Muğla</option><option>Aydın</option>
+        <option>Konya</option><option>Adana</option><option>Gaziantep</option><option>Kayseri</option>
+      </datalist>
+      <datalist id="categories">
+        <option>site yönetim şirketi</option><option>apartman yönetimi</option><option>emlak ofisi</option>
+        <option>diş kliniği</option><option>muhasebe bürosu</option><option>inşaat firması</option>
+        <option>restoran</option><option>otel</option><option>güzellik salonu</option>
+      </datalist>
+    </div>
+  </section>
+
+  <main class="layout" id="layout">
+    <section class="list-pane" aria-label="İşletmeler">
+      <div class="tabs" role="tablist" aria-label="Liste kaynağı">
+        <button role="tab" class="tab" id="tabResults" data-tab="results" aria-selected="true">Arama sonuçları</button>
+        <button role="tab" class="tab" id="tabSaved" data-tab="saved" aria-selected="false">Kayıtlılarım</button>
+        <button role="tab" class="tab" id="tabImport" data-tab="import" aria-selected="false">Kendi listemi ekle</button>
+      </div>
+
+      <div id="importBox" class="importbox" hidden>
+        <h2>Kendi listeni ekle</h2>
+        <p>Her satıra bir işletme yaz: <b>işletme adı ; telefon ; adres</b>. Excel’den kopyalayıp yapıştırabilirsin. Şehir ve iş kolu kutuları etiket olarak kullanılır.</p>
+        <label class="sr-only" for="importText">İşletme listesi</label>
+        <textarea id="importText" placeholder="Güven Site Yönetimi ; 0258 111 22 33 ; Merkezefendi&#10;Mavi Yönetim ; 0532 000 00 00"></textarea>
+        <button type="button" id="importGo" class="btn primary">Listeye ekle</button>
+      </div>
+
+      <div id="listTools" hidden>
+        <div class="chips" id="chips" role="group" aria-label="Filtre"></div>
+        <div id="meta" class="meta"></div>
+      </div>
+      <ul id="list" class="list"></ul>
+      <div id="empty" class="empty"></div>
+    </section>
+
+    <aside id="detail" class="detail" hidden aria-label="İşletme ayrıntısı"></aside>
+  </main>
+
+  <dialog id="settings" class="sheet" aria-labelledby="settingsTitle">
+    <form method="dialog" id="settingsForm" class="sheet-in" autocomplete="off"></form>
+  </dialog>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
